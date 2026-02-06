@@ -1,9 +1,12 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import {validateToken} from "@/lib/cache";
+import { cookies } from 'next/headers';
 
 export  async function proxy(request: NextRequest) {
     const token = request.cookies.get('token_auth_1') // or session cookie
+    console.log((await cookies()).get('token_auth_1'))
+    console.log("Middleware - Cookies:", request.cookies)
 
     console.log("Middleware - Token:", token);
     if (!token) {
