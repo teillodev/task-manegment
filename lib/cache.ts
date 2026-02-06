@@ -29,7 +29,13 @@ export async function validateToken(token:string): Promise<boolean>{
         return true;
     }
     console.log("Token not found in cache, checking database");
+    try{
+
     result = await getToken(token);
+    }catch (error){
+        console.error("Error validating token:", error);
+        return false;
+    }
     if (result) {
         console.log("Token found in database, adding to cache");
         setTokenInCache(token);

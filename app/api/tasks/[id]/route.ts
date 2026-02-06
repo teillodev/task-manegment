@@ -8,7 +8,9 @@ export async function PATCH(
   try {
     const body = await request.json();
     const { title, description, status } = body;
-    const { id } = await params;
+    const p = await params;
+
+    const { id } = (await p.params);
 
     const result = await query(
       'UPDATE tasks SET title = COALESCE($1, title), description = COALESCE($2, description), status = COALESCE($3, status), updated_at = NOW() WHERE id = $4 RETURNING *',
@@ -37,7 +39,8 @@ export async function DELETE(
   params: any
 ) {
   try {
-    const { id } =  await params;
+    const p = await params;
+    const { id } =  (await p.params);
 
     const result = await query(
       'DELETE FROM tasks WHERE id = $1 RETURNING *',
