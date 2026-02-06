@@ -26,5 +26,8 @@ export async function storeToken(userId: number, token: string): Promise<string>
     await query('INSERT INTO tokens (user_id, token) VALUES ($1, $2)', [userId, token]);
     return token;
 }
+export async function deleteTokenByUserId(userId: number) {
+    await query('DELETE FROM tokens WHERE user_id = $1', [userId]);
+}
 
 export default pool;

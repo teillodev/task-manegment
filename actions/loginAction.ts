@@ -5,6 +5,7 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import {getUserByUsernameAndPassword, storeToken} from "@/lib/db";
+import { randomUUID } from "crypto";
 
 export async function loginAction(formData: FormData) {
     const username = formData.get("username")?.toString();
@@ -20,7 +21,7 @@ export async function loginAction(formData: FormData) {
     if (!user) {
         throw new Error("Invalid credentials");
     }
-    const token = "asdlkjasd";
+    const token = randomUUID();
 
     const storedToken = await storeToken(user.id, token);
 

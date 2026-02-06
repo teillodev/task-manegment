@@ -25,12 +25,16 @@ export function getTokenFromCache(token: string): boolean {
 export async function validateToken(token:string): Promise<boolean>{
     let result = getTokenFromCache(token);
     if (result){
+        console.log("Token found in cache");
         return true;
     }
+    console.log("Token not found in cache, checking database");
     result = await getToken(token);
     if (result) {
+        console.log("Token found in database, adding to cache");
         setTokenInCache(token);
         return true;
     }
+    console.log("Token not found in database");
     return false;
 }
