@@ -3,12 +3,12 @@ import { query } from '@/lib/db';
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  params: any
 ) {
   try {
     const body = await request.json();
     const { title, description, status } = body;
-    const { id } = params;
+    const { id } = await params;
 
     const result = await query(
       'UPDATE tasks SET title = COALESCE($1, title), description = COALESCE($2, description), status = COALESCE($3, status), updated_at = NOW() WHERE id = $4 RETURNING *',
@@ -34,7 +34,7 @@ export async function PATCH(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  params: any
 ) {
   try {
     const { id } =  await params;
